@@ -49,13 +49,33 @@ def _listing(id, title, price, fields, extra=None, desc="", status="active"):
 
 PALM = {
     "key": "palmrealty",
+    "brand": "palm",
     "name": "Palm Realty",
+    "mark": "Palm",            # wordmark split: <mark> + <name-rest>
     "tagline": "Coastal Florida homes, condos & investment properties",
     "city": "Sarasota, FL",
+    "region": "Sarasota · Siesta Key · Casey Key",
     "phone": "(941) 555-0142",
     "email": "hello@palmrealty.example",
-    "accent": "#0f9b8e",       # teal
+    "accent": "#0f9b8e",       # legacy (kept for index page)
     "accent_dark": "#0a6f66",
+    "hero_kicker": "Gulf Coast · Florida",
+    "hero_title": "Coastal living, considered.",
+    "hero_sub": "A boutique brokerage for Gulf-front homes, sky-high condos, and the rare "
+                "bayfront lot. We know this coast by its light.",
+    "hero_cta": "Browse listings",
+    "about_kicker": "The barrier islands, by heart",
+    "about_title": "We find the water first, the house second.",
+    "about_body": "Palm Realty was built around a simple idea: the best coastal homes are found "
+                  "by people who actually live on the water. From Siesta Key's quartz sand to the "
+                  "quiet coves of Osprey, we represent buyers and sellers who care about more than "
+                  "square footage — light, salt air, and the way a morning lands on the Gulf.",
+    "stats": [("$1.2B", "Gulf-coast sales"), ("38", "Waterfront closings / yr"),
+              ("4.9", "Average client rating"), ("22", "Years on the islands")],
+    "agent": {"name": "Marina Vega", "title": "Principal Broker", "initials": "MV",
+              "phone": "(941) 555-0142", "email": "marina@palmrealty.example"},
+    "cta_title": "Find your place on the water.",
+    "cta_sub": "Tell us how you want to live on the coast — we'll bring the shortlist.",
     "api_url": "https://dev2.readychatai.com",
     "api_key": "",             # <-- Palm Realty (#621, DEV) WidgetConfiguration.api_key
     "listings": [
@@ -206,13 +226,34 @@ PALM = {
 
 HARBOR = {
     "key": "harborestates",
+    "brand": "harbor",
     "name": "Harbor Estates",
+    "mark": "Harbor",
     "tagline": "New England coastal & historic homes",
     "city": "Newport, RI",
+    "region": "Newport · Jamestown · Little Compton",
+    "coords": "41.4901° N · 71.3128° W",
     "phone": "(401) 555-0177",
     "email": "info@harborestates.example",
-    "accent": "#1f4e79",       # navy
+    "accent": "#1f4e79",       # legacy (kept for index page)
     "accent_dark": "#14375a",
+    "hero_kicker": "Aquidneck Island · Rhode Island",
+    "hero_title": "Newport homes, held to a higher standard.",
+    "hero_sub": "Historic mansions, harborfront condos, and coastal land across Aquidneck Island "
+                "and the East Bay — represented with the discretion they deserve.",
+    "hero_cta": "View the portfolio",
+    "about_kicker": "A century of coastline",
+    "about_title": "The historic and the harborfront, since 1901.",
+    "about_body": "Harbor Estates specializes in the properties that reward patience: Bellevue "
+                  "Avenue's gilded-age estates, the working harbor's wharf condos, and the open "
+                  "land of the East Bay. For four generations we have advised buyers and sellers "
+                  "of Rhode Island's most consequential coastal homes.",
+    "stats": [("1901", "Established"), ("$2.4B", "Lifetime volume"),
+              ("11", "Historic-register homes sold"), ("4", "Generations")],
+    "agent": {"name": "Whitfield Rowe", "title": "Managing Partner", "initials": "WR",
+              "phone": "(401) 555-0177", "email": "wrowe@harborestates.example"},
+    "cta_title": "A conversation, in confidence.",
+    "cta_sub": "Whether you are buying, selling, or simply weighing the market, we are glad to talk.",
     "api_url": "https://qa2.readychatai.com",
     "api_key": "",             # <-- Harbor Estates (#501, QA) WidgetConfiguration.api_key
     "listings": [

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}{{ item.title }} — {{ r.name }}{% endblock %}
+{% block body %}
+<div class="wrap">
+  <div class="crumb"><a href="/">{{ r.name }}</a> &nbsp;/&nbsp; <a href="/#listings">Listings</a> &nbsp;/&nbsp; {{ item.title }}</div>
+  <div class="gallery">
+    <a class="g" href="{{ img(item.id, 1200, 900) }}"><img loading="lazy" src="{{ img(item.id, 1200, 900) }}" alt="{{ item.title }}"></a>
+    {% for n in range(2,6) %}
+    <div class="g"><img loading="lazy" src="{{ img(item.id ~ '-' ~ n, 640, 480) }}" alt=""></div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="detail">
+    <div>
+      <div>
+        {% if item.status=='sold' %}<span class="pill sold">Sold</span>
+        {% elif item.status=='pending' %}<span class="pill pending">Pending</span>
+        {% elif item.fields.get('Listing Type')=='For Rent' %}<span class="pill">For Rent</span>
+        {% else %}<span class="pill">For Sale</span>{% endif %}
+      </div>
+      <h1>{{ item.title }}</h1>
+      <div class="muted">{{ item.fields.get('Address')|val }}</div>
+      <div class="price">{{ item.price }}</div>
+      <p class="lede">{{ item.desc }}</p>
+
+      <div class="keyrow">
+        {% if item.fields.get('Bedrooms') is not none %}<div class="k"><b>{{ item.fields.get('Bedrooms') }}</b><span>Bedrooms</span></div>{% endif %}
+        {% if item.fields.get('Bathrooms') is not none %}<div class="k"><b>{{ item.fields.get('Bathrooms') }}</b><span>Bathrooms</span></div>{% endif %}
+        {% if item.fields.get('Square Footage') %}<div class="k"><b>{{ item.fields.get('Square Footage') }}</b><span>Sq Ft</span></div>{% endif %}
+        <div class="k"><b>{{ item.fields.get('Property Type')|val }}</b><span>Type</span></div>
+        {% if item.fields.get('Year Built') %}<div class="k"><b>{{ item.fields.get('Year Built') }}</b><span>Built</span></div>{% endif %}
+      </div>
+
+      <div class="blk-title">Property details</div>
+      <dl class="fields">
+        {% for f in preset_fields %}
+        <div><dt>{{ f }}</dt><dd>{{ item.fields.get(f)|val }}</dd></div>
+        {% endfor %}
+      </dl>
+
+      {% if item.extra %}
+      <div class="blk-title">Additional information</div>
+      <dl class="fields extra">
+        {% for k,v in item.extra.items() %}
+        <div><dt>{{ k }}</dt><dd>{{ v|val }}</dd></div>
+        {% endfor %}
+      </dl>
+      {% endif %}
+    </div>
+
+    <aside class="aside">
+      <div class="p">{{ item.price }}</div>
+      {% if coordline %}<div class="coordline">{{ coordline }}</div>{% else %}<div style="height:14px"></div>{% endif %}
+      <a class="btn btn-primary" href="/#contact">Schedule a showing</a>
+      <a class="btn btn-ghost" href="tel:{{ r.agent.phone }}" style="border-color:var(--line);color:var(--ink)">Call {{ r.agent.phone }}</a>
+      <div class="agent2">
+        <div class="avatar">{{ r.agent.initials }}</div>
+        <div>
+          <div class="an">{{ r.agent.name }}</div>
+          <div class="at">{{ r.agent.title }} · {{ r.name }}</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+{% endblock %}

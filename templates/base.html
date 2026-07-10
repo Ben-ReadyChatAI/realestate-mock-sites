@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}{{ r.name }}{% endblock %}</title>
+<meta name="description" content="{{ r.tagline }} — {{ r.region }}.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{% if r.brand == 'palm' %}
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+{% else %}
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+{% endif %}
+<link rel="stylesheet" href="/static/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E{{ '🌴' if r.brand=='palm' else '⚓' }}%3C/text%3E%3C/svg%3E">
+{{ widget_snippet|safe }}
+</head>
+<body class="brand-{{ r.brand }}">
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="{{ r.name }} home">
+      {% if r.brand == 'palm' %}
+      <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 21V10"/><path d="M12 10c0-3-2.2-5.4-6-6 2.2 1.4 3 3.4 3 5"/><path d="M12 10c0-3 2.2-5.4 6-6-2.2 1.4-3 3.4-3 5"/><path d="M12 10C10 8 7 7.4 4 8.6c2.4.4 4 1.6 5 3.4"/><path d="M12 10c2-2 5-2.6 8-1.4-2.4.4-4 1.6-5 3.4"/></svg>
+      {% else %}
+      <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><path d="M12 7v14"/><path d="M5 12a7 7 0 0 0 14 0"/><path d="M8 12H4M20 12h-4"/></svg>
+      {% endif %}
+      <span>{% if r.brand=='palm' %}<b>{{ r.name.split(' ',1)[0] }}</b> {{ r.name.split(' ',1)[1] }}{% else %}{{ r.name }}{% endif %}</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/#listings">Listings</a>
+      <a href="/#about">About</a>
+      <a href="/#contact">Contact</a>
+      <a class="nav-cta" href="/#contact">{{ r.phone }}</a>
+    </nav>
+  </div>
+</header>
+
+{% block body %}{% endblock %}
+
+<footer id="contact">
+  <div class="wrap">
+    <div>© {{ r.name }} · {{ r.region }}</div>
+    <div class="muted">{{ r.phone }} · <a href="mailto:{{ r.email }}">{{ r.email }}</a></div>
+    <div class="muted" style="width:100%;font-size:.76rem;opacity:.7">Mock site for RCAI real-estate widget testing — not a real brokerage.</div>
+  </div>
+</footer>
+</body>
+</html>

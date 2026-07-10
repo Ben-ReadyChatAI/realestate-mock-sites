@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% set ICON_BED %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 14h18M3 18v2M21 18v2M7 10V8a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v2"/></svg>{% endset %}
+{% set ICON_BATH %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 12V6a2 2 0 0 1 4 0M3 12h18v2a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5zM6 19l-1 2M18 19l1 2"/></svg>{% endset %}
+{% set ICON_AREA %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5"/></svg>{% endset %}
+
+{% block body %}
+<section class="hero">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">{{ r.hero_kicker }}</div>
+      <h1>{{ r.hero_title }}</h1>
+      <p>{{ r.hero_sub }}</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#listings">{{ r.hero_cta }}</a>
+        <a class="btn btn-ghost" href="#contact">Speak with an agent</a>
+      </div>
+      {% if r.coords %}<div class="coords">{{ r.coords }}</div>{% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap">
+    <div class="grid">
+      {% for n,l in r.stats %}
+      <div class="stat">
+        <div class="n">{% if r.brand=='palm' and l=='Average client rating' %}{{ n }}<sup>★</sup>{% else %}{{ n }}{% endif %}</div>
+        <div class="l">{{ l }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="listings">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">{{ r.region }}</div>
+      <div class="rule2"></div>
+      <h2>Current listings</h2>
+    </div>
+    <div class="filters" aria-hidden="true">
+      <span class="chip on">All</span><span class="chip">For Sale</span><span class="chip">For Rent</span>
+      <span class="chip">Waterfront</span><span class="chip">Land</span><span class="chip">Commercial</span>
+    </div>
+    <div class="cards">
+      {% for it in r.listings %}
+      {% set lt = it.fields.get('Listing Type') %}
+      <a class="card" href="/listing/{{ it.id }}">
+        <div class="ph">
+          <img loading="lazy" src="{{ img(it.id) }}" alt="{{ it.title }}">
+          {% if it.status=='sold' %}<span class="badge sold">Sold</span>
+          {% elif it.status=='pending' %}<span class="badge pending">Pending</span>
+          {% elif lt=='For Rent' %}<span class="badge rent">For Rent</span>
+          {% else %}<span class="badge">For Sale</span>{% endif %}
+        </div>
+        <div class="body">
+          <div class="price">{{ it.price }}</div>
+          <h3>{{ it.title }}</h3>
+          <div class="addr">{{ it.fields.get('Address')|val }}</div>
+          <div class="specs">
+            {% if it.fields.get('Bedrooms') is not none %}<span>{{ ICON_BED|safe }}{{ it.fields.get('Bedrooms') }} bd</span>{% endif %}
+            {% if it.fields.get('Bathrooms') is not none %}<span>{{ ICON_BATH|safe }}{{ it.fields.get('Bathrooms') }} ba</span>{% endif %}
+            <span>{{ ICON_AREA|safe }}{{ it.fields.get('Square Footage')|val }}{% if it.fields.get('Square Footage') %} sqft{% endif %}</span>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <div class="eyebrow">{{ r.about_kicker }}</div>
+        <div class="rule2"></div>
+        <h2 style="margin-top:.3em">{{ r.about_title }}</h2>
+        <p>{{ r.about_body }}</p>
+        <a class="btn btn-primary" href="#contact" style="margin-top:22px">{{ r.cta_title.split('.')[0] }}</a>
+      </div>
+      <div class="art"><img loading="lazy" src="{{ img(r.key ~ '-about', 900, 1120) }}" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap inner">
+    <div>
+      <div class="eyebrow" style="color:var(--sun)">Get in touch</div>
+      <h2 style="margin-top:.3em">{{ r.cta_title }}</h2>
+      <p>{{ r.cta_sub }}</p>
+    </div>
+    <div class="agent">
+      <div class="avatar">{{ r.agent.initials }}</div>
+      <div>
+        <div class="an">{{ r.agent.name }}</div>
+        <div class="at">{{ r.agent.title }}</div>
+        <a href="tel:{{ r.agent.phone }}">{{ r.agent.phone }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
