@@ -9,11 +9,20 @@ Run local:  FLASK_APP=app flask run  (or gunicorn app:app)
 Test a subdomain locally:  curl -H "Host: palmrealty.readychatai.lat" localhost:8000
 """
 
+import os
+
 from flask import Flask, abort, render_template_string, request
 
 from data import PRESET_FIELDS, REALTORS
 
 app = Flask(__name__)
+
+# Widget api_keys come from the environment (not committed). Empty -> site
+# renders without the widget for that realtor.
+for _key, _env in (("palmrealty", "DEV_WIDGET_KEY"), ("harborestates", "QA_WIDGET_KEY")):
+    _v = os.environ.get(_env)
+    if _v:
+        REALTORS[_key]["api_key"] = _v
 
 
 def _realtor_from_host():
